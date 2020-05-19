@@ -1,5 +1,5 @@
 # some_codes_in_python
-Some random code that I wrote in Python 3
+Some random codes that I wrote in Python 3
 
 I hope that you enjoy lokking it
 
