@@ -1,2 +1,2 @@
 language = "python3"
-run = "python3 average_of_three_points.py"
+run = "python3 heap_min_with_numpy.py"
