@@ -3,7 +3,7 @@
 class Node:
 
   def __init__(self, value): #constructor
-    self.value = value 
+    self.value = value
   
   def get_value(self): #method to retun the value
     return self.value
