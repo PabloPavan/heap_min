@@ -1,3 +1,4 @@
+import unittest
 # This class is a example of a objetc that can be storage in the heap
 # it can be expanded to include more attributes and methods 
 class Node:
@@ -8,8 +9,8 @@ class Node:
   def get_value(self): #method to retun the value
     return self.value
 
-#This class implements all methods of a min heap
-#The attribute value of the node class is the key of the heap 
+# This class implements all methods of a min heap
+# The attribute value of the node class is the key of the heap 
 
 class Heap_min:
 
@@ -22,20 +23,21 @@ class Heap_min:
     return True
   
   def extract(self): #method to extract a node in the heap
-    try:
+    if(len(self.heap) > 0):
       node = self.heap.pop(0)
       if(len(self.heap) > 0):
         self.heap[0] = self.heap[len(self.heap) - 1];
         self.heapifydown(0)
       return node
-    except IndexError:
-      print("There's no more elements in the heap")
+    else:
+      raise IndexError("There's no more elements in the heap")
 
   def top(self): #method to return the node in the heap's top
-    try:
+    if(len(self.heap) > 0):
       return self.heap[0]
-    except IndexError:
-      print("There's no more elements in the heap")
+    else:
+      raise IndexError("There's no more elements in the heap")
+ 
 
   def parent(self, index): #method to return the index of the parent node
     return (index-1)//2
@@ -60,25 +62,37 @@ class Heap_min:
         self.heap[index] , self.heap[self.left(index)] = (self.heap[self.left(index)], self.heap[index])
         index = self.left(index);
 
+class Heap_min_test(unittest.TestCase):
+  def test_node(self): #tesing Heap_min class
 
-def main():
-  #creating two nodes
-  n = Node(2)
-  nn = Node(3)
+    node1 = Node(2) #creating a node
+    node2 = Node(3) #creating a node
 
-  # creating a instance of heap
-  h =  Heap_min() 
+    self.assertEqual(node1.get_value(), 2) #check get_value method
+    self.assertEqual(node2.get_value(), 3) #check get_value method
 
-  #testeting the three main functions of the heap
-  h.insert(n)
-  h.insert(nn)
-  print("top of the heap", h.top().get_value())
-  print("extracting the top", h.extract().get_value())
-  print("extracting the top", h.extract().get_value())
+  def test_heap(self):  #tesing node class
+    
+    node1 = Node(2) #creating a node
+    node2 = Node(3) #creating a node
 
-  ## testing the try catch
-  print("extracting the top", h.extract())
-  print("topo da pilha", h.top())
+    h =  Heap_min()  # creating a instance of heap
+    
+    self.assertTrue(h.insert(node1)) #check insert method
+    self.assertTrue(h.insert(node2)) #check insert method
+
+    self.assertEqual(h.top().get_value(),2) #check top method
+    self.assertEqual(h.extract().get_value(),2) #check extract method
+
+    self.assertEqual(h.top().get_value(),3) #check top method
+    self.assertEqual(h.extract().get_value(),3) #check extract method
+
+    with self.assertRaises(IndexError) as ie: 
+       h.top() #check top method raise
+
+    with self.assertRaises(IndexError): 
+      h.extract() #check extract method raise
+
 
 if (__name__ == "__main__"):
-  main()
+  unittest.main()
