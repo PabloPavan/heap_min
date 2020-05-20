@@ -38,7 +38,6 @@ class Heap_min:
     else:
       raise IndexError("There's no more elements in the heap")
  
-
   def parent(self, index): #method to return the index of the parent node
     return (index-1)//2
   
@@ -92,7 +91,6 @@ class Heap_min_test(unittest.TestCase):
 
     with self.assertRaises(IndexError): 
       h.extract() #check extract method raise
-
 
 if (__name__ == "__main__"):
   unittest.main()
