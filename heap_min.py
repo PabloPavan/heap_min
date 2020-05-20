@@ -4,6 +4,8 @@ import unittest
 class Node:
 
   def __init__(self, value): #constructor
+    if type(value) is not int:
+      raise TypeError("The value needs to be a integer")
     self.value = value
   
   def get_value(self): #method to retun the value
@@ -18,6 +20,8 @@ class Heap_min:
     self.heap = [] #creating a list that will storage the nodes
 
   def insert(self,node): #method to insert a node in the heap
+    if not isinstance(node, Node):
+      raise TypeError("This function only work with a node object")
     self.heap.append(node)
     self.heapifyup(len(self.heap)-1)
     return True
@@ -70,12 +74,23 @@ class Heap_min_test(unittest.TestCase):
     self.assertEqual(node1.get_value(), 2) #check get_value method
     self.assertEqual(node2.get_value(), 3) #check get_value method
 
+    with self.assertRaises(TypeError): #testing the type of value
+      Node("oi")
+      Node(1.2)
+      Node(5j)
+
   def test_heap(self):  #tesing node class
     
     node1 = Node(2) #creating a node
     node2 = Node(3) #creating a node
 
     h =  Heap_min()  # creating a instance of heap
+
+    with self.assertRaises(TypeError): #testing the type of value
+      h.insert("1")
+      h.insert(1)
+      h.insert(1.2)
+      h.insert(5j)
     
     self.assertTrue(h.insert(node1)) #check insert method
     self.assertTrue(h.insert(node2)) #check insert method
@@ -86,7 +101,7 @@ class Heap_min_test(unittest.TestCase):
     self.assertEqual(h.top().get_value(),3) #check top method
     self.assertEqual(h.extract().get_value(),3) #check extract method
 
-    with self.assertRaises(IndexError) as ie: 
+    with self.assertRaises(IndexError): 
        h.top() #check top method raise
 
     with self.assertRaises(IndexError): 
